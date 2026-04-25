@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signal vs Noise Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #0f0f10;
+      color: white;
+    }
+    h2 {
+      text-align: center;
+    }
+    p {
+      line-height: 1.5;
+    }
+    button {
+      margin: 6px;
+      padding: 12px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background: #1f1f22;
+      color: white;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #2d2d30;
+    }
+    .hidden {
+      display: none;
+    }
+    .card {
+      background: #1a1a1d;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Signal vs Noise Navigator</h2>
+<p>Answer a few questions to determine what you're actually experiencing.</p>
+
+<div id="step1" class="card">
+  <p>Does this situation require more effort than before?</p>
+  <button onclick="answer('effort','more')">More effort</button>
+  <button onclick="answer('effort','less')">Less effort</button>
+</div>
+
+<div id="step2" class="hidden card">
+  <p>What is happening to the emotional intensity?</p>
+  <button onclick="answer('emotion','increase')">Increasing / looping</button>
+  <button onclick="answer('emotion','decrease')">Decreasing / neutral</button>
+</div>
+
+<div id="step3" class="hidden card">
+  <p>Does this feel like something repeating or ending?</p>
+  <button onclick="answer('pattern','repeat')">Repeating</button>
+  <button onclick="answer('pattern','ending')">Ending / dissolving</button>
+</div>
+
+<div id="step4" class="hidden card">
+  <p>Does this feel forced or natural?</p>
+  <button onclick="answer('flow','forced')">Forced</button>
+  <button onclick="answer('flow','natural')">Natural / effortless</button>
+</div>
+
+<div id="result" class="hidden card"></div>
+
+<script>
+let answers = {};
+
+function answer(key, value) {
+  answers[key] = value;
+
+  if (key === 'effort') {
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  } else if (key === 'emotion') {
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+  } else if (key === 'pattern') {
+    document.getElementById('step3').classList.add('hidden');
+    document.getElementById('step4').classList.remove('hidden');
+  } else if (key === 'flow') {
+    document.getElementById('step4').classList.add('hidden');
+    showResult();
+  }
+}
+
+function showResult() {
+  let score = 0;
+
+  if (answers.effort === 'less') score++;
+  if (answers.emotion === 'decrease') score++;
+  if (answers.pattern === 'ending') score++;
+  if (answers.flow === 'natural') score++;
+
+  let resultText = "";
+
+  if (score >= 3) {
+    resultText = "<h3>Signal Detected</h3><p>This is likely a structural shift. Nothing is breaking — something has already changed.</p>";
+  } else if (score <= 1) {
+    resultText = "<h3>Pattern Activity (Noise)</h3><p>This appears to be an active loop. The system is still engaged.</p>";
+  } else {
+    resultText = "<h3>Mixed State</h3><p>Part of this is shifting. Part is still active. Observe — don’t force clarity.</p>";
+  }
+
+  resultText += "<p><strong>Most people misread this moment.</strong><br>It’s not necessarily a problem — often it’s a structural shift.</p>";
+
+  document.getElementById('result').innerHTML = resultText;
+  document.getElementById('result').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
