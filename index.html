@@ -112,8 +112,20 @@ function showResult() {
     resultText = "<h3>Mixed State</h3><p>Part of this is shifting. Part is still active. Observe — don’t force clarity.</p>";
   }
 
-  resultText += "<p><strong>Most people misread this moment.</strong><br>It’s not necessarily a problem — often it’s a structural shift.</p>";
+resultText += `
+<p><strong>Most people misread this moment.</strong><br>
+It’s not necessarily a problem — it’s often interference being interpreted as truth.</p>
 
+<p style="margin-top:15px;"><strong>You’re not lacking clarity — you’re seeing interference.</strong></p>
+
+<p>If you want to understand what’s actually driving this and how to move cleanly from here, you’ll want access to the deeper system this is based on.</p>
+
+<a href="YOUR_MAILERLITE_LINK" target="_blank">
+  <button style="margin-top:15px; background:#8c4b5e;">
+    Join the Waitlist
+  </button>
+</a>
+`;
   document.getElementById('result').innerHTML = resultText;
   document.getElementById('result').classList.remove('hidden');
 }
