@@ -1,135 +1,216 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Signal vs Noise Calculator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signal vs Noise Navigator</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
-      padding: 20px;
+      padding: 24px;
       background: #0f0f10;
       color: white;
     }
-    h2 {
+
+    h1, h2 {
       text-align: center;
     }
+
     p {
-      line-height: 1.5;
+      line-height: 1.55;
+      font-size: 16px;
     }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: #1a1a1d;
+      padding: 24px;
+      border-radius: 14px;
+      margin-top: 22px;
+    }
+
     button {
-      margin: 6px;
-      padding: 12px 18px;
-      border-radius: 6px;
+      margin: 8px 8px 8px 0;
+      padding: 13px 18px;
+      border-radius: 8px;
       border: none;
       cursor: pointer;
-      background: #1f1f22;
+      background: #242428;
       color: white;
-      font-size: 14px;
+      font-size: 15px;
     }
+
     button:hover {
-      background: #2d2d30;
+      background: #333338;
     }
+
     .hidden {
       display: none;
     }
-    .card {
-      background: #1a1a1d;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
+
+    .cta-button {
+      margin-top: 18px;
+      background: #8c4b5e;
+      font-weight: bold;
+    }
+
+    .cta-button:hover {
+      background: #8c4b5e;
+      opacity: 0.9;
+    }
+
+    .small-note {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-top: 18px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #333;
+      margin: 24px 0;
     }
   </style>
 </head>
 
 <body>
 
-<h2>Signal vs Noise Navigator</h2>
-<p>Answer a few questions to determine what you're actually experiencing.</p>
+  <h1>Signal vs Noise Navigator</h1>
 
-<div id="step1" class="card">
-  <p>Does this situation require more effort than before?</p>
-  <button onclick="answer('effort','more')">More effort</button>
-  <button onclick="answer('effort','less')">Less effort</button>
-</div>
+  <div class="intro">
+    <p>Answer a few questions to determine what you’re actually experiencing.</p>
+    <p><strong>Bring one specific situation to mind</strong> — something you’re trying to understand, decide about, or stop looping around.</p>
+  </div>
 
-<div id="step2" class="hidden card">
-  <p>What is happening to the emotional intensity?</p>
-  <button onclick="answer('emotion','increase')">Increasing / looping</button>
-  <button onclick="answer('emotion','decrease')">Decreasing / neutral</button>
-</div>
+  <div id="step1" class="card">
+    <p><strong>Does this situation require more effort than before?</strong></p>
+    <button onclick="answer('effort','more')">More effort</button>
+    <button onclick="answer('effort','less')">Less effort</button>
+  </div>
 
-<div id="step3" class="hidden card">
-  <p>Does this feel like something repeating or ending?</p>
-  <button onclick="answer('pattern','repeat')">Repeating</button>
-  <button onclick="answer('pattern','ending')">Ending / dissolving</button>
-</div>
+  <div id="step2" class="hidden card">
+    <p><strong>What is happening to the emotional intensity?</strong></p>
+    <button onclick="answer('emotion','increase')">Increasing / looping</button>
+    <button onclick="answer('emotion','decrease')">Decreasing / neutral</button>
+  </div>
 
-<div id="step4" class="hidden card">
-  <p>Does this feel forced or natural?</p>
-  <button onclick="answer('flow','forced')">Forced</button>
-  <button onclick="answer('flow','natural')">Natural / effortless</button>
-</div>
+  <div id="step3" class="hidden card">
+    <p><strong>Does this feel like something repeating or ending?</strong></p>
+    <button onclick="answer('pattern','repeat')">Repeating</button>
+    <button onclick="answer('pattern','ending')">Ending / dissolving</button>
+  </div>
 
-<div id="result" class="hidden card"></div>
+  <div id="step4" class="hidden card">
+    <p><strong>Does this feel forced or natural?</strong></p>
+    <button onclick="answer('flow','forced')">Forced</button>
+    <button onclick="answer('flow','natural')">Natural / effortless</button>
+  </div>
 
-<script>
-let answers = {};
+  <div id="step5" class="hidden card">
+    <p><strong>What feels strongest underneath this?</strong></p>
+    <button onclick="answer('distortion','pressure')">Pressure to decide</button>
+    <button onclick="answer('distortion','fear')">Fear of being wrong</button>
+    <button onclick="answer('distortion','thinking')">Trying to figure it out</button>
+    <button onclick="answer('distortion','avoidance')">Avoiding something</button>
+    <button onclick="answer('distortion','none')">None of these</button>
+  </div>
 
-function answer(key, value) {
-  answers[key] = value;
+  <div id="result" class="hidden card"></div>
 
-  if (key === 'effort') {
-    document.getElementById('step1').classList.add('hidden');
-    document.getElementById('step2').classList.remove('hidden');
-  } else if (key === 'emotion') {
-    document.getElementById('step2').classList.add('hidden');
-    document.getElementById('step3').classList.remove('hidden');
-  } else if (key === 'pattern') {
-    document.getElementById('step3').classList.add('hidden');
-    document.getElementById('step4').classList.remove('hidden');
-  } else if (key === 'flow') {
-    document.getElementById('step4').classList.add('hidden');
-    showResult();
-  }
-}
+  <script>
+    let answers = {};
 
-function showResult() {
-  let score = 0;
+    function answer(key, value) {
+      answers[key] = value;
 
-  if (answers.effort === 'less') score++;
-  if (answers.emotion === 'decrease') score++;
-  if (answers.pattern === 'ending') score++;
-  if (answers.flow === 'natural') score++;
+      if (key === 'effort') {
+        showStep('step2');
+      } else if (key === 'emotion') {
+        showStep('step3');
+      } else if (key === 'pattern') {
+        showStep('step4');
+      } else if (key === 'flow') {
+        showStep('step5');
+      } else if (key === 'distortion') {
+        document.getElementById('step5').classList.add('hidden');
+        showResult();
+      }
+    }
 
-  let resultText = "";
+    function showStep(nextStepId) {
+      const steps = ['step1','step2','step3','step4','step5'];
+      steps.forEach(step => document.getElementById(step).classList.add('hidden'));
+      document.getElementById(nextStepId).classList.remove('hidden');
+    }
 
-  if (score >= 3) {
-    resultText = "<h3>Signal Detected</h3><p>This is likely a structural shift. Nothing is breaking — something has already changed.</p>";
-  } else if (score <= 1) {
-    resultText = "<h3>Pattern Activity (Noise)</h3><p>This appears to be an active loop. The system is still engaged.</p>";
-  } else {
-    resultText = "<h3>Mixed State</h3><p>Part of this is shifting. Part is still active. Observe — don’t force clarity.</p>";
-  }
+    function showResult() {
+      let score = 0;
 
-resultText += `
-<p><strong>Most people misread this moment.</strong><br>
-It’s not necessarily a problem — it’s often interference being interpreted as truth.</p>
+      if (answers.effort === 'less') score++;
+      if (answers.emotion === 'decrease') score++;
+      if (answers.pattern === 'ending') score++;
+      if (answers.flow === 'natural') score++;
+      if (answers.distortion === 'none') score++;
 
-<p style="margin-top:15px;"><strong>You’re not lacking clarity — you’re seeing interference.</strong></p>
+      let resultText = "";
 
-<p>If you want to understand what’s actually driving this and how to move cleanly from here, you’ll want access to the deeper system this is based on.</p>
+      if (score >= 4) {
+        resultText = `
+          <h2>Signal Detected</h2>
+          <p>This appears to be a structural shift.</p>
+          <p>The situation may not require more processing. It may be showing you that something has already reorganized internally.</p>
 
-<a href="YOUR_MAILERLITE_LINK" target="_blank">
-  <button style="margin-top:15px; background:#8c4b5e;">
-    Join the Waitlist
-  </button>
-</a>
-`;
-  document.getElementById('result').innerHTML = resultText;
-  document.getElementById('result').classList.remove('hidden');
-}
-</script>
+          <p><strong>Orientation:</strong><br>
+          Clarity doesn’t increase with effort. It stabilizes when interference stops.</p>
+        `;
+      } else if (score <= 2) {
+        resultText = `
+          <h2>Pattern Activity / Noise</h2>
+          <p>This looks like an active loop.</p>
+          <p>The emotional charge may still be shaping your interpretation, which means the signal may not be clean enough to act from yet.</p>
+
+          <p><strong>Orientation:</strong><br>
+          You may not need a better decision right now — you may need to process what’s distorting the signal first.</p>
+        `;
+      } else {
+        resultText = `
+          <h2>Mixed State</h2>
+          <p>Part of this appears to be shifting, but part of the old pattern is still active.</p>
+          <p>This is where people often force clarity too early or mistake partial signal for full alignment.</p>
+
+          <p><strong>Orientation:</strong><br>
+          Pause before acting. Let the interference settle so the signal becomes easier to read.</p>
+        `;
+      }
+
+      resultText += `
+        <hr>
+
+        <p><strong>Most people misread this moment.</strong><br>
+        It’s not always a lack of clarity — it’s interference being interpreted as truth.</p>
+
+        <p><strong>You’re not lacking clarity — you’re learning to detect distortion.</strong></p>
+
+        <p>If you want to understand what’s actually driving this and how to move cleanly from here, you’ll want access to the deeper system this is based on.</p>
+
+        <a href="YOUR_MAILERLITE_LINK" target="_blank">
+          <button class="cta-button">Join the Waitlist</button>
+        </a>
+
+        <p class="small-note">You can refresh this page and run the navigator again with another situation.</p>
+      `;
+
+      document.getElementById('result').innerHTML = resultText;
+      document.getElementById('result').classList.remove('hidden');
+    }
+  </script>
 
 </body>
 </html>
